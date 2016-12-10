@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ int **declareMatrix(int rows, int columns)
 	return a;
 }
 
-int *declareIArray(int size, int fill)
+int *declareIntArray(int size, int fill)
 {
 	int *a = new int[size];
 	for (int i = 0; i < size; i++)
@@ -26,7 +27,7 @@ int *declareIArray(int size, int fill)
 	return a;
 }
 
-bool *declareBArray(int size)
+bool *declareBoolArray(int size)
 {
 	bool *a = new bool[size];
 	for (int i = 0; i < size; i++)
@@ -56,12 +57,12 @@ void destroyMatrix(int **a, int rows)
 	delete[] a;
 }
 
-void destroyIArray(int *a)
+void destroyIntArray(int *a)
 {
 	delete[] a;
 }
 
-void destroyBArray(bool *a)
+void destroyBoolArray(bool *a)
 {
 	delete[] a;
 }
@@ -107,29 +108,34 @@ void dijkstra(int **adjM, int *distance, bool *used, int *parent, int n, int m)
 
 int main()
 {
+	ifstream fin("input.txt");
+	
+	if (fin.fail())
+	{
+		cout << "No input file" << '\n';
+		return 0;
+	}
+	
 	int n = 0;
 	int m = 0;
-	cout << "Enter n and m" << '\n';
-	cin >> n >> m;
+	fin >> n >> m;
 	
 	int **adjM = declareMatrix(n, m);
-	
-	cout << "Enter m roads" << '\n';
-	
+		
 	int a = 0;
 	int b = 0;
 	int len = 0;
 	
 	for (int i = 0; i < m; i++)
 	{
-		cin >> a >> b >> len;
+		fin >> a >> b >> len;
 		adjM[a - 1][b - 1] = len;
 		adjM[b - 1][a - 1] = len;
 	}
 	
-	int *distance = declareIArray(n, inf);
-	int *parent = declareIArray(n, -1);
-	bool *used = declareBArray(n);
+	int *distance = declareIntArray(n, inf);
+	int *parent = declareIntArray(n, -1);
+	bool *used = declareBoolArray(n);
 	
 	dijkstra(adjM, distance, used, parent, n, m);
 	
@@ -150,9 +156,10 @@ int main()
 	}
 	
 	destroyMatrix(adjM, n);
-	destroyIArray(distance);
-	destroyIArray(parent);
-	destroyBArray(used);
+	destroyIntArray(distance);
+	destroyIntArray(parent);
+	destroyBoolArray(used);
+	fin.close();
 	
 	return 0;
 }
