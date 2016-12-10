@@ -6,7 +6,7 @@ using namespace std;
 const int mod = (int)1e9 + 7;
 const int base = 101;
 
-int hash(char *s, int start, int length)
+int getHash(char *s, int start, int length)
 {
 	long long result = 0;
 	long long multiplier = 1;
@@ -69,8 +69,8 @@ void rabinKarp(char *s, char *needle, bool &occurs)
 	int n = (int)strlen(s);
 	int m = (int)strlen(needle);
 	
-	int sHash = hash(s, 0, m);
-	int needleHash = hash(needle, 0, m);
+	int sHash = getHash(s, 0, m);
+	int needleHash = getHash(needle, 0, m);
 	cout << "Occurences: ";
 	for (int i = 0; i < n - m + 1; i++)
 	{
