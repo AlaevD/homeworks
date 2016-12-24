@@ -44,16 +44,16 @@ int h(int x1, int y1, int x2, int y2)
 	return abs(x1 - x2) + abs(y1 - y2);
 }
 
-void findMin(int &x, int &y, int **f, int **currents, int **used, int n, int m)
+void findMin(int &x, int &y, int **heuristic, int **currents, int **used, int n, int m)
 {
 	int minValue = (int)1e9;
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
 		{
-			if (minValue > f[i][j] && !used[i][j] && currents[i][j])
+			if (minValue > heuristic[i][j] && !used[i][j] && currents[i][j])
 			{
-				minValue = f[i][j];
+				minValue = heuristic[i][j];
 				x = i;
 				y = j;
 			}
@@ -119,16 +119,16 @@ bool isEqual(int x1, int y1, int x2, int y2)
 	return x1 == x2 && y1 == y2;
 }
 
-void aStar(int **a, int **used, int **distance, int **parent, int **f, int **currents, int n, int m, int xStart, int yStart, int xFinish, int yFinish)
+void aStar(int **a, int **used, int **distance, int **parent, int **heuristic, int **currents, int n, int m, int xStart, int yStart, int xFinish, int yFinish)
 {
 	distance[xStart][yStart] = 0;
-	f[xStart][yStart] = distance[xStart][yStart] + h(xStart, yStart, xFinish, yFinish);
+	heuristic[xStart][yStart] = distance[xStart][yStart] + h(xStart, yStart, xFinish, yFinish);
 	int xCurrent = -1;
 	int yCurrent = 0;
 	currents[xStart][yStart] = 1;
 	for (int i = 0; i < n * m; i++)
 	{
-		findMin(xCurrent, yCurrent, f, currents, used, n, m);
+		findMin(xCurrent, yCurrent, heuristic, currents, used, n, m);
 		
 		if (isEqual(xCurrent, yCurrent, xFinish, yFinish))
 		{
@@ -149,7 +149,7 @@ void aStar(int **a, int **used, int **distance, int **parent, int **f, int **cur
 					{
 						setParent(parent, xCurrent, yCurrent, xTo, yTo);
 						distance[xTo][yTo] = distance[xCurrent][yCurrent] + 1;
-						f[xTo][yTo] = distance[xTo][yTo] + h(xTo, yTo, xFinish, yFinish);
+						heuristic[xTo][yTo] = distance[xTo][yTo] + h(xTo, yTo, xFinish, yFinish);
 						currents[xTo][yTo] = 1;
 					}
 				}
@@ -219,17 +219,18 @@ int main()
 	
 	int **parent = declareMatrix(n, m, -10);
 	
-	int **f = declareMatrix(n, m, inf);
+	int **heuristic = declareMatrix(n, m, inf);
 	
 	int **currents = declareMatrix(n, m, 0);
 	
-	aStar(a, used, distance, parent, f, currents, n, m, xStart, yStart, xFinish, yFinish);	
+	aStar(a, used, distance, parent, heuristic, currents, n, m, xStart, yStart, xFinish, yFinish);	
 	
 	destroyMatrix(a, n);
 	destroyMatrix(used, n);
 	destroyMatrix(distance, n);
 	destroyMatrix(parent, n);
-	destroyMatrix(f, n);
+	destroyMatrix(currents, n);
+	destroyMatrix(heuristic, n);
 	fin.close();
 	return 0;
 }
