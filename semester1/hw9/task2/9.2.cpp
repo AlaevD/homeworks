@@ -92,6 +92,12 @@ void setParent(int **parent, int xParent, int yParent, int xChild, int yChild)
 	}
 }
 
+//parent[i][j] = x
+//x = 1 - parent is on the right
+//x = 3 - parent is on the left
+//x = 4 - parent is above
+//x = 2 - parent is below 
+
 int getParent(int **parent, int &x, int &y)
 {
 	int result = parent[x][y];
