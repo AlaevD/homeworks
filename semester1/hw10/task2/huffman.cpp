@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const int maxSize = 200;
+const int maxSize = 10000;
 
 void calculateWeights(char *s, int n, int *weight)
 {
@@ -194,6 +194,18 @@ void getChar(Node *node, int &i, char *code, ofstream &fout)
 	code[i] == '1' ? getChar(node->right, i, code, fout) : getChar(node->left, i, code, fout);
 }
 
+void destroyNode(Node *node)
+{
+	if (!node)
+	{
+		return;
+	}
+
+	destroyNode(node->left);
+	destroyNode(node->right);
+	delete node;
+}
+
 void huffmanDecode(std::ifstream &fin, ofstream &fout)
 {
 	Node *root = readNode(fin);
@@ -205,4 +217,6 @@ void huffmanDecode(std::ifstream &fin, ofstream &fout)
 	{
 		getChar(root, i, code, fout);
 	}
+
+	destroyNode(root);
 }
