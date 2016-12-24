@@ -66,6 +66,12 @@ bool inside(int x, int y, int n, int m)
 	return 0 <= x && x < n && 0 <= y && y < m;
 }
 
+//parent[i][j] = x
+//x = 3 - parent is on the left
+//x = 1 - parent is on the right
+//x = 2 - parent is below
+//x = 4 - parent is above
+
 void setParent(int **parent, int xParent, int yParent, int xChild, int yChild)
 {
 	if (xParent == xChild)
