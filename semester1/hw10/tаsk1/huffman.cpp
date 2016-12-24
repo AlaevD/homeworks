@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const int maxSize = 200;
+const int maxSize = 10000;
 
 void calculateWeights(char *s, int n, int *weight)
 {
@@ -105,6 +105,18 @@ void processSingleCharCase(char *s, ofstream &fout)
 	}
 }
 
+void destroyNode(Node *node)
+{
+	if (!node)
+	{
+		return;
+	}
+
+	destroyNode(node->left);
+	destroyNode(node->right);
+	delete node;
+}
+
 void huffmanEncode(char *s, ofstream &fout)
 {	
 	int weight[maxSize] = {0};
@@ -145,9 +157,68 @@ void huffmanEncode(char *s, ofstream &fout)
 	
 	printTree(root, fout);
 	fout << '\n';
+
+	destroyNode(root);
 	
 	for (int i = 0; i < n; i++)
 	{
 		fout << code[s[i]];
 	}
+}
+
+Node *readNode(ifstream &fin)
+{
+	char string[maxSize];
+	fin >> string;
+	if (string[0] == '(' && string[1] == '-')
+	{
+		Node *node = createNode(0, -1, nullptr, nullptr);
+		node->left = readNode(fin);
+		node->right = readNode(fin);
+		return node;
+	}
+	else if (string[0] == '(')
+	{
+		Node *node = createNode(0, string[1], nullptr, nullptr);
+		node->left = readNode(fin);
+		node->right = readNode(fin);
+		return node;
+	}
+	else
+	{
+		if ((int)strlen(string) == 1)
+		{
+			return createNode(0, string[0], nullptr, nullptr);
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+}
+
+void getChar(Node *node, int &i, char *code, ofstream &fout)
+{
+	if (isLeaf(node))
+	{
+		fout << node->symbol;
+		return;
+	}
+	i++;
+	code[i] == '1' ? getChar(node->right, i, code, fout) : getChar(node->left, i, code, fout);
+}
+
+void huffmanDecode(std::ifstream &fin, ofstream &fout)
+{
+	Node *root = readNode(fin);
+	char code[maxSize] = { 0 };
+	fin >> code;
+	int i = -1;
+	int n = (int)strlen(code);
+	while (i < n - 1)
+	{
+		getChar(root, i, code, fout);
+	}
+
+	destroyNode(root);
 }
