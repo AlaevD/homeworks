@@ -105,6 +105,18 @@ void processSingleCharCase(char *s, ofstream &fout)
 	}
 }
 
+void destroyNode(Node *node)
+{
+	if (!node)
+	{
+		return;
+	}
+
+	destroyNode(node->left);
+	destroyNode(node->right);
+	delete node;
+}
+
 void huffmanEncode(char *s, ofstream &fout)
 {	
 	int weight[maxSize] = {0};
@@ -145,6 +157,8 @@ void huffmanEncode(char *s, ofstream &fout)
 	
 	printTree(root, fout);
 	fout << '\n';
+
+	destroyNode(root);
 	
 	for (int i = 0; i < n; i++)
 	{
@@ -156,7 +170,7 @@ Node *readNode(ifstream &fin)
 {
 	char string[maxSize];
 	fin >> string;
-	if (string[0] == '(' && string[1] == '-')
+	if (string[0] == '(' && string[1] == '-' && strlen(string) > 2)
 	{
 		Node *node = createNode(0, -1, nullptr, nullptr);
 		node->left = readNode(fin);
@@ -192,18 +206,6 @@ void getChar(Node *node, int &i, char *code, ofstream &fout)
 	}
 	i++;
 	code[i] == '1' ? getChar(node->right, i, code, fout) : getChar(node->left, i, code, fout);
-}
-
-void destroyNode(Node *node)
-{
-	if (!node)
-	{
-		return;
-	}
-
-	destroyNode(node->left);
-	destroyNode(node->right);
-	delete node;
 }
 
 void huffmanDecode(std::ifstream &fin, ofstream &fout)
