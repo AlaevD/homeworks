@@ -66,54 +66,50 @@ bool inside(int x, int y, int n, int m)
 	return 0 <= x && x < n && 0 <= y && y < m;
 }
 
+enum parentDirection {up, down, leftward, rightward};
+
 void setParent(int **parent, int xParent, int yParent, int xChild, int yChild)
 {
 	if (xParent == xChild)
 	{
 		if (yChild > yParent)
 		{
-			parent[xChild][yChild] = 3;
+			parent[xChild][yChild] = leftward;
 		}
 		else
 		{
-			parent[xChild][yChild] = 1;
+			parent[xChild][yChild] = rightward;
 		}
 	}
 	else
 	{
 		if (xChild > xParent)
 		{
-			parent[xChild][yChild] = 4;
+			parent[xChild][yChild] = up;
 		}
 		else
 		{
-			parent[xChild][yChild] = 2;
+			parent[xChild][yChild] = down;
 		}
 	}
 }
 
-//parent[i][j] = x
-//x = 1 - parent is on the right
-//x = 3 - parent is on the left
-//x = 4 - parent is above
-//x = 2 - parent is below 
-
 int getParent(int **parent, int &x, int &y)
 {
 	int result = parent[x][y];
-	if (result == 1)
+	if (result == rightward)
 	{
 		y++;
 	}
-	else if (result == 3)
+	else if (result == leftward)
 	{
 		y--;
 	}
-	else if (result == 2)
+	else if (result == down)
 	{
 		x++;
 	}
-	else if (result == 4)
+	else if (result == up)
 	{
 		x--;
 	}
