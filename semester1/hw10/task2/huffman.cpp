@@ -166,34 +166,40 @@ void huffmanEncode(char *s, ofstream &fout)
 	}
 }
 
-Node *readNode(ifstream &fin)
+Node *getNode(char *tree, int &i)
 {
-	char string[maxSize];
-	fin >> string;
-	if (string[0] == '(' && string[1] == '-' && strlen(string) > 2)
+	int n = strlen(tree);
+	while (i < n && (tree[i] == ' ' || tree[i] == ')'))
+	{
+		i++;
+	}
+	if (tree[i] == '(' && tree[i + 2] == '1')
 	{
 		Node *node = createNode(0, -1, nullptr, nullptr);
-		node->left = readNode(fin);
-		node->right = readNode(fin);
+		i += 4;
+		node->left = getNode(tree, i);
+		node->right = getNode(tree, i);
 		return node;
 	}
-	else if (string[0] == '(')
+	else if (tree[i] == '(')
 	{
-		Node *node = createNode(0, string[1], nullptr, nullptr);
-		node->left = readNode(fin);
-		node->right = readNode(fin);
+		Node *node = createNode(0, tree[i + 1], nullptr, nullptr);
+		i += 3;
+		node->left = getNode(tree, i);
+		node->right = getNode(tree, i);
 		return node;
 	}
 	else
 	{
-		if ((int)strlen(string) == 1)
+		if (tree[i + 4] == ')')
 		{
-			return createNode(0, string[0], nullptr, nullptr);
+			i += 6;
 		}
 		else
 		{
-			return nullptr;
+			i += 5;
 		}
+		return nullptr;
 	}
 }
 
@@ -210,10 +216,13 @@ void getChar(Node *node, int &i, char *code, ofstream &fout)
 
 void huffmanDecode(std::ifstream &fin, ofstream &fout)
 {
-	Node *root = readNode(fin);
+	char tree[maxSize];
+	fin.getline(tree, maxSize);
+	int i = 0;
+	Node *root = getNode(tree, i);
 	char code[maxSize] = { 0 };
 	fin >> code;
-	int i = -1;
+	i = -1;
 	int n = (int)strlen(code);
 	while (i < n - 1)
 	{
