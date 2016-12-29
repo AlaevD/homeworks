@@ -177,7 +177,7 @@ void huffmanEncode(char *s, ofstream &fout)
 	
 	Node *root = queueTop(q);
 	queuePop(q);
-	destroy(q);
+	destroyQueue(q);
 	
 	char **code = declareCharMatrix(maxSize);
 	char temp[maxSize] = {0};

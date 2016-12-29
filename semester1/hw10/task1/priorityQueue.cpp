@@ -66,23 +66,26 @@ Node *queueTop(PQueue *q)
 	{
 		temp = temp->next;
 	}
-	
-	Node *result = new Node;
-	result->left = temp->data->left;
-	result->right = temp->data->right;
-	result->symbol = temp->data->symbol;
-	result->weight = minWeight;
-	
-	return result;
+	return temp->data;
+}
+
+void destroy(Node *node)
+{
+	if (!node)
+	{
+		return;
+	}
+
+	destroy(node->left);
+	destroy(node->right);
+	delete node;
 }
 
 void removeFromHead(PQueue *q)
 {
-	QNode *toDelete = q->head;
-	q->head = toDelete->next;
-	delete toDelete->data;
-	delete toDelete;
+	q->head = q->head->next;
 	q->size--;
+	return;
 }
 
 void queuePop(PQueue *q)
@@ -100,15 +103,11 @@ void queuePop(PQueue *q)
 	{
 		temp = temp->next;
 	}
-	
-	QNode *toDelete = temp->next;
-	temp->next = toDelete->next;
-	delete toDelete->data;
-	delete toDelete;
+	temp->next = temp->next->next;
 	q->size--;
 }
 
-void destroy(PQueue *q)
+void destroyQueue(PQueue *q)
 {
 	if (!q->head)
 	{
@@ -120,10 +119,10 @@ void destroy(PQueue *q)
 	{
 		QNode *toDelete = temp;
 		temp = temp->next;
-		delete toDelete->data;
+		destroy(toDelete->data);
 		delete toDelete;
 	}
-	delete temp->data;
+	destroy(temp->data);
 	delete temp;
 	delete q;
 }

@@ -13,6 +13,6 @@ struct PQueue;
 PQueue *createPQueue();
 void queuePush(PQueue *q, Node *node);
 void queuePop(PQueue *q);
-void destroy(PQueue *q);
+void destroyQueue(PQueue *q);
 int queueSize(PQueue *q);
 Node *queueTop(PQueue *q);
