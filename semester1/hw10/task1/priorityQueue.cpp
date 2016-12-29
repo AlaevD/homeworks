@@ -119,10 +119,8 @@ void destroyQueue(PQueue *q)
 	{
 		QNode *toDelete = temp;
 		temp = temp->next;
-		destroy(toDelete->data);
 		delete toDelete;
 	}
-	destroy(temp->data);
 	delete temp;
 	delete q;
 }
