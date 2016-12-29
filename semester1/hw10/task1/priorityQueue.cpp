@@ -110,8 +110,14 @@ void queuePop(PQueue *q)
 
 void destroy(PQueue *q)
 {
+	if (!q)
+	{
+		return;
+	}
+	
 	if (!q->head)
 	{
+		delete q;
 		return;
 	}
 
