@@ -13,105 +13,112 @@ bool sign(char c)
 	return c == '+' || c == '-';
 }
 
+enum states {fail = -1, start, bareSign, finish1, numberDot, finish2, numberE, numberESign, finish3};
+
 int move(int &state, char c)
 {
 	switch (state)
 	{
-		case 0:
+		case start:
 			if (sign(c))
 			{
-				return 1;
+				return bareSign;
 			}
 			else if (digit(c))
 			{
-				return 2;
+				return finish1;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 1:
+		case bareSign:
 			if (digit(c))
 			{
-				return 2;
+				return finish1;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 2:
+		case finish1:
 			if (digit(c))
 			{
-				return 2;
+				return finish1;
 			}
 			else if (c == '.')
 			{
-				return 3;
+				return numberDot;
 			}
 			else if (c == 'E')
 			{
-				return 5;
+				return numberE;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 3:
+		case numberDot:
 			if (digit(c))
 			{
-				return 4;
+				return finish2;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 4:
+		case finish2:
 			if (digit(c))
 			{
-				return 4;
+				return finish2;
 			}
 			else if (c == 'E')
 			{
-				return 5;
+				return numberE;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 5:
+		case numberE:
 			if (sign(c))
 			{
-				return 6;
+				return numberESign;
 			}
 			else if (digit(c))
 			{
-				return 7;
+				return finish3;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 6:
+		case numberESign:
 			if (digit(c))
 			{
-				return 7;
+				return finish3;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
-		case 7:
+		case finish3:
 			if (digit(c))
 			{
-				return 7;
+				return finish3;
 			}
 			else
 			{
-				return -1;
+				return fail;
 			}
 		default:
-			return -1;
+			return fail;
 	}		
+}
+
+bool finalState(int state)
+{
+	return state == finish1 || state == finish2 || state == finish3;
 }
 
 bool realNumber(char *s)
@@ -120,12 +127,12 @@ bool realNumber(char *s)
 	
 	int i = 0;
 	char current = s[i];
-	int state = 0;
+	int state = start;
 	
 	while (i < n)
 	{
 		state = move(state, current);
-		if (state == -1)
+		if (state == fail)
 		{
 			break;
 		}
@@ -134,7 +141,7 @@ bool realNumber(char *s)
 		current = s[i];
 	}
 	
-	return state == 2 || state == 4 || state == 7;
+	return finalState(state);
 }
 
 int main()
