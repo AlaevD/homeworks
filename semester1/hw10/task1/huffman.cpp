@@ -5,8 +5,6 @@
 
 using namespace std;
 
-const int maxSize = 10000;
-
 void calculateWeights(char *s, int n, int *weight)
 {
 	for (int i = 0; i < n; i++)
@@ -17,6 +15,8 @@ void calculateWeights(char *s, int n, int *weight)
 
 void printWeights(int *weight)
 {
+	const int maxSize = 10000;
+
 	cout << "Symbol weights(unsorted):" << '\n';
 	for (int i = 0; i < maxSize; i++)
 	{
@@ -27,14 +27,12 @@ void printWeights(int *weight)
 	}
 }
 
-char code[maxSize][maxSize] = {0};
-
 bool isLeaf(Node *node)
 {
 	return node->symbol != -1;
 }
 
-void getCodes(Node *node, char *s)
+void getCodes(Node *node, char *s, char **code)
 {
 	if (isLeaf(node))
 	{
@@ -45,13 +43,13 @@ void getCodes(Node *node, char *s)
 	if (node->left)
 	{
 		strcat(s, "0");
-		getCodes(node->left, s);
+		getCodes(node->left, s, code);
 		s[(int)strlen(s) - 1] = '\0';
 	}
 	if (node->right)
 	{
 		strcat(s, "1");
-		getCodes(node->right, s);
+		getCodes(node->right, s, code);
 		s[(int)strlen(s) - 1] = '\0';
 	}
 }
@@ -85,7 +83,8 @@ Node *createNode(int weight, char c, Node *left, Node *right)
 bool containsOneChar(char *s)
 {
 	char c = s[0];
-	for (int i = 1; i < (int)strlen(s); i++)
+	int n = strlen(s);
+	for (int i = 1; i < n; i++)
 	{
 		if (c != s[i])
 		{
@@ -117,8 +116,36 @@ void destroyNode(Node *node)
 	delete node;
 }
 
+char **declareCharMatrix(int size)
+{
+	char **result = new char*[size];
+	for (int i = 0; i < size; i++)
+	{
+		result[i] = new char[size];
+	}
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			result[i][j] = 0;
+		}
+	}
+	return result;
+}
+
+void destroyCharMatrix(char **s, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		delete[] s[i];
+	}
+	delete[] s;
+}
+
 void huffmanEncode(char *s, ofstream &fout)
 {	
+	const int maxSize = 10000;
+
 	int weight[maxSize] = {0};
 	int n = (int)strlen(s);
 	
@@ -152,8 +179,9 @@ void huffmanEncode(char *s, ofstream &fout)
 	queuePop(q);
 	destroy(q);
 	
+	char **code = declareCharMatrix(maxSize);
 	char temp[maxSize] = {0};
-	getCodes(root, temp);
+	getCodes(root, temp, code);
 	
 	printTree(root, fout);
 	fout << '\n';
@@ -164,36 +192,43 @@ void huffmanEncode(char *s, ofstream &fout)
 	{
 		fout << code[s[i]];
 	}
+	destroyCharMatrix(code, maxSize);
 }
 
-Node *readNode(ifstream &fin)
+Node *getNode(char *tree, int &i)
 {
-	char string[maxSize];
-	fin >> string;
-	if (string[0] == '(' && string[1] == '-')
+	int n = strlen(tree);
+	while (i < n && (tree[i] == ' ' || tree[i] == ')'))
+	{
+		i++;
+	}
+	if (tree[i] == '(' && tree[i + 2] == '1')
 	{
 		Node *node = createNode(0, -1, nullptr, nullptr);
-		node->left = readNode(fin);
-		node->right = readNode(fin);
+		i += 4;
+		node->left = getNode(tree, i);
+		node->right = getNode(tree, i);
 		return node;
 	}
-	else if (string[0] == '(')
+	else if (tree[i] == '(')
 	{
-		Node *node = createNode(0, string[1], nullptr, nullptr);
-		node->left = readNode(fin);
-		node->right = readNode(fin);
+		Node *node = createNode(0, tree[i + 1], nullptr, nullptr);
+		i += 3;
+		node->left = getNode(tree, i);
+		node->right = getNode(tree, i);
 		return node;
 	}
 	else
 	{
-		if ((int)strlen(string) == 1)
+		if (tree[i + 4] == ')')
 		{
-			return createNode(0, string[0], nullptr, nullptr);
+			i += 6;
 		}
 		else
 		{
-			return nullptr;
+			i += 5;
 		}
+		return nullptr;
 	}
 }
 
@@ -210,10 +245,15 @@ void getChar(Node *node, int &i, char *code, ofstream &fout)
 
 void huffmanDecode(std::ifstream &fin, ofstream &fout)
 {
-	Node *root = readNode(fin);
+	const int maxSize = 10000;
+
+	char tree[maxSize];
+	fin.getline(tree, maxSize);
+	int i = 0;
+	Node *root = getNode(tree, i);
 	char code[maxSize] = { 0 };
 	fin >> code;
-	int i = -1;
+	i = -1;
 	int n = (int)strlen(code);
 	while (i < n - 1)
 	{
