@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 public class ArrayStack<Type> implements Stack<Type> {
     private ArrayList<Type> data;
-    private int head;
+    private int head = -1;
 
     public ArrayStack() {
         data = new ArrayList<Type>();
-        head = -1;
     }
 
     @Override
@@ -17,20 +16,13 @@ public class ArrayStack<Type> implements Stack<Type> {
     @Override
     public void pop() {
         if (isEmpty()) {
-            return;
-        }
-
-        data.remove(head);
-        head--;
-    }
-
-    @Override
-    public Type top() {
-        if (isEmpty()) {
             return null;
         }
 
-        return data.get(head);
+        Type result =  data.at(head);
+        data.remove(head);
+        head--;
+        return result;
     }
 
     @Override

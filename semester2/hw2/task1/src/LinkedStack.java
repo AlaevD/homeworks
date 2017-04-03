@@ -19,19 +19,12 @@ public class LinkedStack<Type> implements Stack<Type> {
     @Override
     public void pop() {
         if (isEmpty()) {
-            return;
-        }
-
-        head = head.next;
-    }
-
-    @Override
-    public Type top() {
-        if (isEmpty()) {
             return null;
         }
 
-        return head.value;
+        Type result = head.value;
+        head = head.next;
+        return result;
     }
 
     @Override

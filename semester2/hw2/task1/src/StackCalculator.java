@@ -2,7 +2,7 @@ public class StackCalculator {
     public static int calculateExpression(String expression) {
         int i = 0;
         int n = expression.length();
-        LinkedStack<Integer> stack = new LinkedStack<>();
+        Stack<Integer> stack = new LinkedStack<>();
 
         while (i < n) {
             while (i < n && expression.charAt(i) == ' ') {
@@ -23,17 +23,15 @@ public class StackCalculator {
                 stack.push(nextNumber);
             }
             else {
-                int a = stack.top();
-                stack.pop();
-                int b = stack.top();
-                stack.pop();
+                int a = stack.pop();
+                int b = stack.pop();
 
                 stack.push(evaluateOperation(a, b, expression.charAt(i)));
                 i++;
             }
         }
 
-        return stack.top();
+        return stack.pop();
     }
 
     private static boolean isDigit(char c) {
