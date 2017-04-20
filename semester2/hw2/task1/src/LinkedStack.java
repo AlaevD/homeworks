@@ -17,7 +17,7 @@ public class LinkedStack<Type> implements Stack<Type> {
     }
 
     @Override
-    public void pop() {
+    public Type pop() {
         if (isEmpty()) {
             return null;
         }

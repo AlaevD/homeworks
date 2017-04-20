@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 public class ArrayStack<Type> implements Stack<Type> {
-    private ArrayList<Type> data;
+    private ArrayList<Type> data = new ArrayList<Type>();
     private int head = -1;
-
-    public ArrayStack() {
-        data = new ArrayList<Type>();
-    }
 
     @Override
     public void push(Type value) {
@@ -14,12 +10,12 @@ public class ArrayStack<Type> implements Stack<Type> {
     }
 
     @Override
-    public void pop() {
+    public Type pop() {
         if (isEmpty()) {
             return null;
         }
 
-        Type result =  data.at(head);
+        Type result =  data.get(head);
         data.remove(head);
         head--;
         return result;
