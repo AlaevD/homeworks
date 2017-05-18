@@ -1,7 +1,11 @@
+/** represents singly linked generic list */
 public class SinglyLinkedList<Type> implements List<Type> {
+    /** represents element of the list */
     private class Node {
-        Type value;
-        Node next;
+        /** element's value */
+        private Type value;
+        /** pointer to the next element */
+        private Node next;
 
         public Node(Type value, Node next) {
             this.next = next;
@@ -9,8 +13,11 @@ public class SinglyLinkedList<Type> implements List<Type> {
         }
     }
 
+    /** pointer to the first element in list */
     private Node head = null;
+    /** pointer to the last element in list */
     private Node tail = null;
+    /** size of the list */
     private int size = 0;
 
     @Override
