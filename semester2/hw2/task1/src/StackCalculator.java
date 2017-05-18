@@ -23,8 +23,8 @@ public class StackCalculator {
                 stack.push(nextNumber);
             }
             else {
-                int a = stack.pop();
                 int b = stack.pop();
+                int a = stack.pop();
 
                 stack.push(evaluateOperation(a, b, expression.charAt(i)));
                 i++;
