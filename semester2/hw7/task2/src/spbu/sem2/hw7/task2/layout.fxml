@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<?import java.util.ArrayList?>
+<GridPane alignment="center" hgap="10" prefWidth="435.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spbu.sem2.hw7.task2.Controller">
+   <rowConstraints>
+      <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" />
+      <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" />
+      <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+   </columnConstraints>
+   <children>
+      <Button fx:id="b0" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="b1" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.columnIndex="1">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="b2" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.columnIndex="2">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="b3" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="b4" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="b5" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="b6" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="b7" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="b8" maxHeight="60.0" maxWidth="100.0" minHeight="60.0" minWidth="100.0" prefHeight="60.0" prefWidth="100.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="newGame" onAction="#resetState" prefHeight="141.0" prefWidth="122.0" text="Start new&#10;  game" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <Label fx:id="display" alignment="CENTER" prefHeight="35.0" prefWidth="101.0" text="" GridPane.columnIndex="3" />
+
+            <fx:define>
+         <ArrayList fx:id="buttons">
+            <fx:reference source="b0" />
+            <fx:reference source="b1" />
+            <fx:reference source="b2" />
+            <fx:reference source="b3" />
+            <fx:reference source="b4" />
+            <fx:reference source="b5" />
+            <fx:reference source="b6" />
+            <fx:reference source="b7" />
+            <fx:reference source="b8" />
+         </ArrayList>
+      </fx:define>
+
+   </children>
+</GridPane>
