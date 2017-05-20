@@ -4,25 +4,9 @@ package spbu.sem2.hw4.task1;
  * Singly-linked generic list class which can not contain two elements with same value
  * @param <Type> list elements value type
  */
-public class UniqueList<Type> extends LinkedList<Type> {
-    /** pointer to the head of the list */
-    private Node head = null;
-
-    /**
-     * checks whether value exists in list
-     * @param value value to be checked
-     * @return true if value exists in list
-     */
-    private boolean exists(Type value) {
-        Node temp = head;
-        while (temp != null) {
-            if (temp.value == value) {
-                return true;
-            }
-            temp = temp.next;
-        }
-        return false;
-    }
+public class UniqueList<Type> implements List<Type> {
+    /** stores UniqueList elements */
+    LinkedList<Type> data = new LinkedList<>();
 
     /**
      * add value to unique list
@@ -31,16 +15,11 @@ public class UniqueList<Type> extends LinkedList<Type> {
      */
     @Override
     public void add(Type value) throws ElementAlreadyExistsException {
-        if (isEmpty()) {
-            head = new Node(value, null);
+        if (data.contains(value)) {
+            throw new ElementAlreadyExistsException();
         }
         else {
-            if (exists(value)) {
-                throw new ElementAlreadyExistsException();
-            }
-            else {
-                head = new Node(value, head);
-            }
+            data.add(value);
         }
     }
 
@@ -52,27 +31,22 @@ public class UniqueList<Type> extends LinkedList<Type> {
      */
     @Override
     public boolean remove(Type value) throws NoSuchElementException {
-        if (!exists(value)) {
+        if (!data.contains(value)) {
             throw new NoSuchElementException();
         }
-
-        if (head.value == value) {
-            head = head.next;
-            return true;
+        else {
+            return data.remove(value);
         }
-
-        Node temp = head;
-        while (temp.next != null && temp.next.value != value) {
-            temp = temp.next;
-        }
-
-        temp.next = temp.next.next;
-        return true;
     }
 
     @Override
     public boolean isEmpty() {
-        return head == null;
+        return data.isEmpty();
+    }
+
+    @Override
+    public void print() {
+        data.print();
     }
 
     /**

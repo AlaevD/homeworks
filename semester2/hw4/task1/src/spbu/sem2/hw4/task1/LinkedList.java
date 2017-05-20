@@ -61,9 +61,25 @@ public class LinkedList<Type> implements List<Type> {
     }
 
     /**
+     * checks whether value exists in list
+     * @param value value to be checked
+     * @return true if value exists in list
+     */
+    public boolean contains(Type value) {
+        Node temp = head;
+        while (temp != null) {
+            if (temp.value == value) {
+                return true;
+            }
+            temp = temp.next;
+        }
+        return false;
+    }
+
+    /**
      * List node
      */
-    protected class Node {
+    private class Node {
         /** node value */
         public Type value = null;
         /** pointer to the next node */
