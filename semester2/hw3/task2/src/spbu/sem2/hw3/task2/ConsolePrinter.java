@@ -1,8 +1,9 @@
 package spbu.sem2.hw3.task2;
 
-public class ConsolePrinter implements Printer {
+/** represents Printer that prints array result into console */
+public class ConsolePrinter extends Printer {
     @Override
-    public void print(int[] array) {
+    public void printResult(int[] array) {
         int n = array.length;
         for (int i = 0; i < n; i++) {
             System.out.print(array[i] + " ");

@@ -6,8 +6,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Enter array size");
         int n = scanner.nextInt();
+
         int[][] a = new int[n][n];
         System.out.println("Enter array elements");
         for (int i = 0; i < n; i++) {
@@ -16,8 +18,6 @@ public class Main {
             }
         }
 
-        int[] result = new int[n * n];
-        new Transformer().transform(a, result);
         int flag = 2;
         System.out.println("Enter 1 if you want to print array to file \"output.txt\" in current directory");
         System.out.println("Otherwise it will be printed to console");
@@ -29,21 +29,18 @@ public class Main {
             }
         }
 
+        Printer printer;
         if (flag == 1) {
-            Printer printer = new FilePrinter();
-            try {
-                printer.print(result);
-            } catch (IOException e) {
-                System.out.print(e.getMessage());
-            }
+            printer = new FilePrinter();
         }
         else {
-            Printer printer = new ConsolePrinter();
-            try {
-                printer.print(result);
-            } catch (IOException e) {
-                System.out.print(e.getMessage());
-            }
+            printer = new ConsolePrinter();
+        }
+
+        try {
+            printer.print(a);
+        } catch (IOException e) {
+            System.out.print(e.getMessage());
         }
     }
 }

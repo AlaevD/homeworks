@@ -5,7 +5,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/** represents Transformer class test */
 public class TransformerTest {
+    /** transforming 3x3 array */
     @Test
     public void transformTest1() {
         int[][] test = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
@@ -15,6 +17,7 @@ public class TransformerTest {
         Assert.assertArrayEquals(expected, actual);
     }
 
+    /** transforming 2d array consisting of one element */
     @Test
     public void transformTest2() {
         int[][] test = {{1}};
@@ -24,6 +27,7 @@ public class TransformerTest {
         Assert.assertArrayEquals(expected, actual);
     }
 
+    /** transforming 5x5 array */
     @Test
     public void transformTest3() {
         int[][] test = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15},

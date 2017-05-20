@@ -1,6 +1,12 @@
 package spbu.sem2.hw3.task2;
 
+/** represents class which transforms 2d array into simple array */
 public class Transformer {
+    /**
+     * transforms given 2d array into simple array by spiral starting from the middle
+     * @param array given array
+     * @param result 1d array that contains reorganized elements of the given array
+     */
     public void transform(int[][] array, int[] result) {
         int resultPointer = 0;
         int i = 0;
