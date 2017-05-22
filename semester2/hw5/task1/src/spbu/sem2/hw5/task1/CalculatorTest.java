@@ -27,7 +27,8 @@ public class CalculatorTest {
         for (int i = 0; i < n; i += 2) {
             expected = a[i] + a[i + 1];
             actual = Calculator.calculate(a[i], a[i + 1], '+');
-            String errorMessage = ((Integer)a[i]).toString() + "+" + ((Integer)a[i + 1]).toString() + "!=" + ((Integer)expected).toString();
+            String errorMessage = ((Integer)a[i]).toString() + "+" + ((Integer)a[i + 1]).toString()
+                    + "!=" + ((Integer)expected).toString();
             Assert.assertTrue(errorMessage, expected == actual);
         }
 
@@ -38,7 +39,8 @@ public class CalculatorTest {
         for (int i = 0; i < n; i += 2) {
             expected = a[i] - a[i + 1];
             actual = Calculator.calculate(a[i], a[i + 1], '-');
-            String errorMessage = ((Integer)a[i]).toString() + "-" + ((Integer)a[i + 1]).toString() + "!=" + ((Integer)expected).toString();
+            String errorMessage = ((Integer)a[i]).toString() + "-" + ((Integer)a[i + 1]).toString()
+                    + "!=" + ((Integer)expected).toString();
             Assert.assertTrue(errorMessage, expected == actual);
         }
 
