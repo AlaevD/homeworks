@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
@@ -10,32 +11,40 @@
 
 <GridPane prefHeight="125.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spbu.sem2.hw5.task1.Controller">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="12.5" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="12.5" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="Infinity" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="Infinity" minHeight="10.0" percentHeight="25.0" prefHeight="50.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="Infinity" minHeight="10.0" percentHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="Infinity" minHeight="10.0" percentHeight="25.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="Infinity" minHeight="10.0" percentHeight="100.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="result" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="5" GridPane.rowIndex="1">
+      <Label fx:id="result" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="4">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
+         <GridPane.margin>
+            <Insets bottom="25.0" left="5.0" right="5.0" top="25.0" />
+         </GridPane.margin>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="Infinity" maxWidth="Infinity" text="=" GridPane.columnIndex="4" GridPane.rowIndex="1">
+      <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="Infinity" maxWidth="Infinity" text="=" GridPane.columnIndex="3">
          <font>
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="operation" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Spinner fx:id="secondOperand" editable="true" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Spinner fx:id="firstOperand" editable="true" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="operation" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
+         </GridPane.margin></ChoiceBox>
+      <Spinner fx:id="secondOperand" editable="true" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="2">
+         <GridPane.margin>
+            <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
+         </GridPane.margin></Spinner>
+      <Spinner fx:id="firstOperand" editable="true" maxHeight="Infinity" maxWidth="Infinity">
+         <GridPane.margin>
+            <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
+         </GridPane.margin></Spinner>
    </children>
 </GridPane>
