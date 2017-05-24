@@ -11,7 +11,7 @@ public class Calculator {
      * @param operation operation
      * @return expression result
      */
-    public BigDecimal calculate(BigDecimal a, BigDecimal b, char operation) {
+    public static BigDecimal calculate(BigDecimal a, BigDecimal b, char operation) {
         BigDecimal result = BigDecimal.valueOf(0);
         switch (operation) {
             case '+':

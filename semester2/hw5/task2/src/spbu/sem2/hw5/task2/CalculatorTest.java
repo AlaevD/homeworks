@@ -30,7 +30,8 @@ public class CalculatorTest {
     @Test
     public void additionTest() {
         for (int i = 0; i < numberOfTests; i++) {
-            Assert.assertTrue(testingValue.add(numbers[i]).equals(calc.calculate(testingValue, numbers[i], '+')));
+            Assert.assertTrue(testingValue.add(numbers[i]).equals(Calculator.calculate(testingValue,
+                    numbers[i], '+')));
         }
     }
 
@@ -38,7 +39,8 @@ public class CalculatorTest {
     @Test
     public void subtractionTest() {
         for (int i = 0; i < numberOfTests; i++) {
-            Assert.assertTrue(testingValue.subtract(numbers[i]).equals(calc.calculate(testingValue, numbers[i], '-')));
+            Assert.assertTrue(testingValue.subtract(numbers[i]).equals(Calculator.calculate(testingValue,
+                    numbers[i], '-')));
         }
     }
 
@@ -46,7 +48,8 @@ public class CalculatorTest {
     @Test
     public void multiplicationTest() {
         for (int i = 0; i < numberOfTests; i++) {
-            Assert.assertTrue(testingValue.multiply(numbers[i]).equals(calc.calculate(testingValue, numbers[i], '*')));
+            Assert.assertTrue(testingValue.multiply(numbers[i]).equals(Calculator.calculate(testingValue,
+                    numbers[i], '*')));
         }
     }
 
@@ -54,7 +57,8 @@ public class CalculatorTest {
     @Test
     public void divisionTest() {
         for (int i = 0; i < numberOfTests; i++) {
-            Assert.assertTrue(testingValue.divide(numbers[i], 5, BigDecimal.ROUND_HALF_UP).equals(calc.calculate(testingValue, numbers[i], '/')));
+            Assert.assertTrue(testingValue.divide(numbers[i], 5,
+                BigDecimal.ROUND_HALF_UP).equals(Calculator.calculate(testingValue, numbers[i], '/')));
         }
     }
 }
