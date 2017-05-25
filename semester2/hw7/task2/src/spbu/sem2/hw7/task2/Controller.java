@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    /** tic-tac-toe game object */
+    private TicTacToe game = new TicTacToe();
+
+    /** game size */
+    private int size = TicTacToe.getGameSize();
+
     /** game buttons */
     @FXML
     private ArrayList<Button> buttons;
     
-    /** display */
+    /** displays messages, e.g. game result */
     @FXML
     private Label display;
-    
-    /** Either "X" or "O" depending on current turn */
-    private String currentTurn = "X";
-    
-    /** how many buttons(max possible number) player can press before game ends */
-    private int buttonsLeft = 9;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,23 +37,18 @@ public class Controller implements Initializable {
      * @param index index of pressed button in buttons array
      */
     private void buttonClicked(int index) {
-        display.setText("");
         Button curButton = buttons.get(index);
-        curButton.setText(currentTurn);
+        int curI = index / size;
+        int curJ = index % size;
+        curButton.setText(String.valueOf(game.makeTurn(curI, curJ)));
         curButton.setDisable(true);
-        checkForWin();
-        buttonsLeft--;
-        if (buttonsLeft == 0) {
-            endGame("You lost");
-            return;
-        }
-        changeTurn();
+        checkForGameEnd();
     }
     
-    /** checks if player have won */
-    private void checkForWin() {
-        if (gameOver()) {
-            endGame("You win");
+    /** checks if game is finished */
+    private void checkForGameEnd() {
+        if (game.gameOver()) {
+            endGame(game.getGameResult());
         }
     }
 
@@ -62,78 +57,17 @@ public class Controller implements Initializable {
      * @param message message to be shown
      */
     private void endGame(String message) {
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setDisable(true);
-        }
+        buttons.forEach(b -> b.setDisable(true));
         display.setText(message);
     }
 
     /** resets game state to the beginning */
     public void resetState() {
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setDisable(false);
-            buttons.get(i).setText("");
+        game = new TicTacToe();
+        display.setText("");
+        for (Button button : buttons) {
+            button.setDisable(false);
+            button.setText("");
         }
-        currentTurn = "X";
-        buttonsLeft = 9;
-    }
-
-    /** checks if game is over(with player having win) */
-    private boolean gameOver() {
-        return checkRows() || checkCols() || checkDiagonals();
-    }
-
-    /**
-     * checks diagonals for three of a kind
-     * @return true if at least one diagonal contains not null same values
-     */
-    private boolean checkDiagonals() {
-        String topLeft = buttons.get(0).getText();
-        String mid = buttons.get(4).getText();
-        String botRight = buttons.get(8).getText();
-        boolean cond1 = topLeft.equals(mid) && mid.equals(botRight) && !mid.isEmpty();
-
-        String topRight = buttons.get(2).getText();
-        String botLeft = buttons.get(6).getText();
-        boolean cond2 = mid.equals(topRight) && topRight.equals(botLeft) && !mid.isEmpty();
-
-        return cond1 || cond2;
-    }
-
-    /**
-     * checks columns for three of a kind
-     * @return true if at least one column contains not null same values
-     */
-    private boolean checkCols() {
-        for (int i = 0; i < 3; i++) {
-            String top = buttons.get(i).getText();
-            String mid = buttons.get(i + 3).getText();
-            String bot = buttons.get(i + 6).getText();
-            if (top.equals(mid) && mid.equals(bot) && !mid.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * checks rows for three of a kind
-     * @return true if at least one row contains not null same values
-     */
-    private boolean checkRows() {
-        for (int i = 0; i < buttons.size(); i += 3) {
-            String left = buttons.get(i).getText();
-            String mid = buttons.get(i + 1).getText();
-            String right = buttons.get(i + 2).getText();
-            if (left.equals(mid) && mid.equals(right) && !mid.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /** changes game turn (e.g. "X" becomes "O") */
-    private void changeTurn() {
-        currentTurn = (currentTurn.equals("X") ? "O" : "X");
     }
 }

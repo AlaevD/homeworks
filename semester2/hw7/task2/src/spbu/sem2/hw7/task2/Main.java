@@ -13,6 +13,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
         primaryStage.setTitle("Game");
         primaryStage.setScene(new Scene(root, 470, 275));
+        primaryStage.setMinHeight(230);
+        primaryStage.setMinWidth(350);
         primaryStage.show();
     }
 
