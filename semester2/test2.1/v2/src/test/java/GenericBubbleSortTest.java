@@ -1,6 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Comparator;
+
 
 /** represents generic bubble sorter test class*/
 public class GenericBubbleSortTest {
@@ -30,25 +32,28 @@ public class GenericBubbleSortTest {
     public void PersonBubbleSortTest() {
         Person[] actual = {new Person(12, "asd"), new Person(31, "qwe"),
          new Person(23, "zxc")};
-        actual = GenericBubbleSort.bubbleSort(actual, Person::compareTo);
+        actual = GenericBubbleSort.bubbleSort(actual, new PersonComparator());
         Assert.assertTrue(sorted(actual));
     }
 
     /** represents person */
-    private class Person implements Comparable<Person> {
+    private class Person{
         int age;
         String name;
         Person(int age, String name) {
             this.age = age;
             this.name = name;
         }
+    }
 
+    /** represents Persons comparator */
+    private class PersonComparator implements Comparator<Person>{
         @Override
-        public int compareTo(Person o) {
-            if (age == o.age) {
+        public int compare(Person o1, Person o2) {
+            if (o1.age == o2.age) {
                 return 0;
             }
-            return (age > o.age ? 1 : -1);
+            return (o1.age > o2.age ? 1 : -1);
         }
     }
 
@@ -59,8 +64,9 @@ public class GenericBubbleSortTest {
      */
     private boolean sorted(Person[] a) {
         final int n = a.length;
+        PersonComparator pc = new PersonComparator();
         for (int i = 0; i < n - 1; i++) {
-            if (a[i].compareTo(a[i + 1]) > 0) {
+            if (pc.compare(a[i], a[i + 1]) > 0) {
                 return false;
             }
         }
