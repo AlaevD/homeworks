@@ -32,12 +32,17 @@ public class Controller implements Initializable {
                 double y = event.getY();
                 double newX = Math.abs(rng.nextInt()) % field.getWidth();
                 double newY = Math.abs(rng.nextInt()) % field.getHeight();
-                while (equal(x, newX) || equal(y, newY)) {
+                while (equal(x, newX) || equal(y, newY) || !visible(newX, newY)) {
                     newX = Math.abs(rng.nextInt()) % field.getWidth();
                     newY = Math.abs(rng.nextInt()) % field.getHeight();
                 }
                 button.setLayoutY(newY);
                 button.setLayoutX(newX);
+            }
+
+            private boolean visible(double newX, double newY) {
+                return newX + button.getWidth() <= field.getWidth() &&
+                       newY + button.getHeight() <= field.getHeight();
             }
 
             private boolean equal(double x, double y) {
