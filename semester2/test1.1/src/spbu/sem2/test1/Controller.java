@@ -1,12 +1,17 @@
 package spbu.sem2.test1;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
+import java.awt.event.MouseEvent;
+import java.beans.EventHandler;
+import java.net.URL;
 import java.util.Random;
+import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable {
     /** random number generator */
     private Random rng = new Random();
 
@@ -18,11 +23,26 @@ public class Controller {
     @FXML
     private Pane field;
 
-    /** processes game action.
-     * When mouse enters button, new coordinates are generated
-     */
-    public void process() {
-        button.setLayoutX(Math.abs(rng.nextInt()) % field.getWidth());
-        button.setLayoutY(Math.abs(rng.nextInt()) % field.getHeight());
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        button.setOnMouseEntered(new javafx.event.EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                double x = event.getX();
+                double y = event.getY();
+                double newX = Math.abs(rng.nextInt()) % field.getWidth();
+                double newY = Math.abs(rng.nextInt()) % field.getHeight();
+                while (equal(x, newX) || equal(y, newY)) {
+                    newX = Math.abs(rng.nextInt()) % field.getWidth();
+                    newY = Math.abs(rng.nextInt()) % field.getHeight();
+                }
+                button.setLayoutY(newY);
+                button.setLayoutX(newX);
+            }
+
+            private boolean equal(double x, double y) {
+                return Math.abs(x - y) < 0.0001;
+            }
+        });
     }
 }
