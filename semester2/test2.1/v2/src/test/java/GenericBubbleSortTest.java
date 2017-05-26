@@ -45,7 +45,7 @@ public class GenericBubbleSortTest {
 
         @Override
         public int compareTo(Person o) {
-            if (age == o.age && name.equals(o.name)) {
+            if (age == o.age) {
                 return 0;
             }
             return (age > o.age ? 1 : -1);
