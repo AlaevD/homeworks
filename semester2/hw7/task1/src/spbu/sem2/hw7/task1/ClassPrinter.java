@@ -25,7 +25,7 @@ class ClassPrinter {
      */
     private void getPackage(Class clazz) {
         if (clazz.getPackage() != null) {
-            sb.append(clazz.getPackage() + ";" + "\n\n");
+            sb.append(clazz.getPackage()).append(";").append("\n\n");
         }
     }
 
@@ -70,8 +70,7 @@ class ClassPrinter {
             getAnnotations(method.getDeclaredAnnotations(), numberOfTabs);
             getTabs(numberOfTabs);
             getModifiers(method.getModifiers());
-            sb.append(method.getReturnType().getSimpleName() + " "
-                    + method.getName() + "(");
+            sb.append(method.getReturnType().getSimpleName()).append(" ").append(method.getName()).append("(");
             getParameters(method.getParameters());
             sb.append(")");
             getExceptions(method.getExceptionTypes());
@@ -94,8 +93,7 @@ class ClassPrinter {
             getAnnotations(field.getDeclaredAnnotations(), numberOfTabs);
             getTabs(numberOfTabs);
             getModifiers(field.getModifiers());
-            sb.append(field.getType().getSimpleName() + " "
-                    + field.getName() + ";\n\n");
+            sb.append(field.getType().getSimpleName()).append(" ").append(field.getName()).append(";\n\n");
         }
     }
 
@@ -126,7 +124,7 @@ class ClassPrinter {
 
         getTabs(numberOfTabs);
         getModifiers(constructor.getModifiers());
-        sb.append(clazz.getSimpleName() + "(");
+        sb.append(clazz.getSimpleName()).append("(");
 
         getParameters(constructor.getParameters());
         sb.append(")");
@@ -144,7 +142,7 @@ class ClassPrinter {
         if (mods.length() == 0) {
             return;
         }
-        sb.append(mods + " ");
+        sb.append(mods).append(" ");
     }
 
     /**
@@ -171,7 +169,7 @@ class ClassPrinter {
      */
     private void getParameters(Parameter[] parameters) {
         for (int i = 0; i < parameters.length; i++) {
-            sb.append(parameters[i].getType().getSimpleName() + " " + parameters[i].getName());
+            sb.append(parameters[i].getType().getSimpleName()).append(" ").append(parameters[i].getName());
             if (i < parameters.length - 1) {
                 sb.append(", ");
             }
@@ -186,7 +184,7 @@ class ClassPrinter {
     private void getAnnotations(Annotation[] annotations, int numberOfTabs) {
         for (Annotation annotation : annotations) {
             getTabs(numberOfTabs);
-            sb.append("@" + annotation.annotationType().getSimpleName() + "\n");
+            sb.append("@").append(annotation.annotationType().getSimpleName()).append("\n");
         }
     }
 
@@ -196,7 +194,7 @@ class ClassPrinter {
      */
     private void getParents(Class clazz) {
         if (!clazz.getSuperclass().equals(Object.class)) {
-            sb.append(" extends " + clazz.getSuperclass().getSimpleName());
+            sb.append(" extends ").append(clazz.getSuperclass().getSimpleName());
         }
 
         Class[] interfaces = clazz.getInterfaces();
@@ -221,10 +219,10 @@ class ClassPrinter {
         getTabs(numberOfTabs);
         String modifiers = Modifier.toString(clazz.getModifiers());
         if (modifiers.isEmpty()) {
-            sb.append("class " + clazz.getSimpleName());
+            sb.append("class ").append(clazz.getSimpleName());
         }
         else {
-            sb.append(modifiers + " class " + clazz.getSimpleName());
+            sb.append(modifiers).append(" class ").append(clazz.getSimpleName());
         }
     }
 
