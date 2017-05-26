@@ -41,7 +41,7 @@ public class Controller implements Initializable {
             }
 
             private boolean equal(double x, double y) {
-                return Math.abs(x - y) < 0.0001;
+                return Math.abs(x - y) < Math.max(button.getWidth(), button.getHeight());
             }
         });
     }
